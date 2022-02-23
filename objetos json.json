@@ -1,0 +1,178 @@
+[
+    {
+        "id": 1,
+        "tipoIdentificacion": "cedula de ciudadanía",
+        "identificacion": 1061852423,
+        "nombres": "mary luz",
+        "apellidos": "mera molano",
+        "direccion": "bosques del pinar",
+        "telefono": "3166952569",
+        "email": "mmeram@gmail.com",
+		"password": "1234",
+        "rol": "administrador",
+        "estado": "activo"
+    },
+    {
+        "id": 2,
+        "tipoIdentificacion": "cedula de ciudadanía",
+        "identificacion": 1061298754,
+        "nombres": "andres",
+        "apellidos": "gonzalez",
+        "direccion": "bosques del pinar",
+        "telefono": "318527413",
+        "email": "agonzales@gmail.com",
+		"password": "5678",
+        "rol": "administrador",
+        "estado": "activo"
+    },
+    {
+
+        "id": 3,
+        "tipoIdentificacion": "cedula de ciudadanía",
+        "identificacion": 1061325897,
+        "nombres": "karen viviana",
+        "apellidos": "jimenez paz",
+        "direccion": "bello horizonte",
+        "telefono": "321578269",
+        "email": "kjimenezp@gmail.com",
+		"edad": 25,
+        "sexo": "femenino",
+        "fechaNacimiento": "10/03/2001",
+		"ocupacion": "vendedora"
+    },
+    {
+        "id": 4,
+        "tipoIdentificacion": "cedula de ciudadania",
+        "identificacion": 1060238941,
+        "nombres": "carlos alberto",
+        "apellidos": "fernandez alegria",
+        "direccion": "asturias",
+        "telefono": "319457821",
+        "email": "cafernandez@gmail.com",
+        "edad": 30,
+		"sexo": "masculino",
+        "fechaNacimiento": "12/04/1992",
+		"ocupacion": "administrador"
+    },
+    {
+        "id": 5,
+        "tipoIdentificacion": "cedula de ciudadanía",
+        "identificacion": 1061784513,
+        "nombres": "juan carlos",
+        "apellidos": "satizabal valverde",
+        "direccion": "guaduales de la hacienda",
+        "telefono": "321203876",
+        "email": "jcsatizabal@gmail.com",
+        "sexo": "masculino",
+        "fechaNacimiento": "03/07/1987"
+    }
+	
+	{
+    "id": 2,
+    "fecha": "09/02/2022",
+    "hora": "04:00pm",
+    "estado": false,
+    "objCliente": {
+                    "id": 3
+                  },
+    "objEmpleado": {
+                    "id": 2
+                   }              
+	}
+	
+	
+	{
+	  "id": 1,
+      "motivo": 1,
+      "antecedentes": "ninguno",
+	  "examenes":
+			[ {
+				"nombre_examen":"AGUDEZA VISUAL",
+				"AVLSC": {"OD":"1", "OI":"1"},
+				"AVPSC": {"OD":"1", "OI":"1"},
+				"PH": {"OD":"1", "OI":"1"}
+			  },
+			  {
+				"nombre_examen":"LENSOMETRIA",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"BIOMICROSCOPIA",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"REFLEJOS",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"QUERATOMETRIA",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"PIO",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"TEST DE COLOR",
+				"TEST": "1",  	
+				"COLOR": "1"
+			  },
+			  {
+				"nombre_examen":"OFTALMOSCOPIA",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"KAPPA",
+				"OD": "1",  	
+				"OI": "1"
+			  },
+			  {
+				"nombre_examen":"RETINOSCOPIA ESTATICA",
+				"ESF": {"OD":"1", "OI":"1"}, 
+				"CIL": {"OD":"1", "OI":"1"}, 
+				"EJE": {"OD":"1", "OI":"1"}, 
+				"AVL": {"OD":"1", "OI":"1"}, 
+				"ADO": {"OD":"1", "OI":"1"}, 
+				"AVC": {"OD":"1", "OI":"1"}
+				
+			  },
+			  {
+				"nombre_examen":"RX FINAL",
+				"ESF": {"OD":"1", "OI":"1"}, 
+				"CIL": {"OD":"1", "OI":"1"}, 
+				"EJE": {"OD":"1", "OI":"1"}, 
+				"AVL": {"OD":"1", "OI":"1"}, 
+				"ADO": {"OD":"1", "OI":"1"}, 
+				"AVC": {"OD":"1", "OI":"1"}
+			  }
+			  
+			],
+      "fecha": "15/02/2022",
+	  "hirschberg": 1,
+	  "ducciones": 1,
+	  "versiones": 1,
+	  "disposicion": 1,
+	  "remision": 1,
+	  "codigo": 1,
+	  "diagnostico": 1,
+	  "control": 1,
+	  "tipoLente": 1,
+	  "distanciaPupilar": 1,
+	 "tratamiento": 1,
+	  "observaciones": 1,
+	  "objCliente": {
+                     "id": 5
+                    },
+	  "objEmpleado": {
+                     "id": 3
+                    }
+		
+	}
+	
+]

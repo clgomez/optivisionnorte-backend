@@ -1,0 +1,27 @@
+
+server:
+  port: 8081
+spring:
+  application:
+    name: proyecto2-optivison-norte
+  datasource:
+    # El nombre de la base de datos es "optivision-norte", crear la base de datos vacia utf8_bin
+    url: jdbc:mysql://localhost/optivision-norte?useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    #database-platform: org.hibernate.dialect.MySQL8Dialect 
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
