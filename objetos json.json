@@ -174,5 +174,18 @@
                     }
 		
 	}
+    
+    {
+     "id": 1,
+     "nombre": "gafas deportivas",
+     "descripcion": "gafas transition",
+      "marca":"polo",
+      "referencia":"p1",
+      "material": "plastico"
+   }
+
+
+
+
 	
 ]
