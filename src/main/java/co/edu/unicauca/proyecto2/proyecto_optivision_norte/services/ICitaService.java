@@ -2,7 +2,6 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Cita;
 
 public interface ICitaService {

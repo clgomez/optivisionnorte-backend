@@ -1,12 +1,9 @@
 package co.edu.unicauca.proyecto2.proyecto_optivision_norte.services;
 
-
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Cita;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.repositories.CitaRepository;
 
@@ -39,14 +36,17 @@ public class CitaServiceImpl implements ICitaService{
     public Cita update(Long idCita, Cita objCita)
     {
         if(this.citaRepository.existsById(idCita))
+        {
+            objCita.setId(idCita);
             return this.citaRepository.save(objCita);
+        }
         else return null; 
     }
 
     @Override
     public boolean delete(Long idCita)
     {
-        Optional <Cita> optCita = this.findById(idCita);
+        Optional <Cita> optCita = this.citaRepository.findById(idCita);
         if(optCita.isPresent())
         {   this.citaRepository.deleteById(idCita);
             return true; 

@@ -1,5 +1,6 @@
-/* package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
+package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 
+import java.util.*;
 import javax.persistence.*;
 
 @Entity
@@ -10,20 +11,77 @@ public class Factura {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fecha;
+    private Float total;
+    private Float abono;
+    private Float saldo;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente objCliente;
 
-    public Factura() {
+    @ManyToOne
+    @JoinColumn(name = "id_empleado", nullable = false)
+    private Empleado objEmpleado;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objFactura")
+	private List <DetalleFactura> detallesFactura; 
+
+    public Long getId() {
+        return id;
     }
-    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getFecha() {
+        return fecha;
+    }
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+    public Float getTotal() {
+        return total;
+    }
+    public void setTotal(Float total) {
+        this.total = total;
+    }
+    public Float getAbono() {
+        return abono;
+    }
+    public void setAbono(Float abono) {
+        this.abono = abono;
+    }
+    public Float getSaldo() {
+        return saldo;
+    }
+    public void setSaldo(Float saldo) {
+        this.saldo = saldo;
+    }
     public Cliente getObjCliente() {
         return objCliente;
     }
     public void setObjCliente(Cliente objCliente) {
         this.objCliente = objCliente;
     } 
-    
+    public Empleado getObjEmpleado() {
+        return objEmpleado;
+    }
+    public void setObjEmpleado(Empleado objEmpleado) {
+        this.objEmpleado = objEmpleado;
+    }
+    public Factura() {
+        this.detallesFactura = new ArrayList<DetalleFactura>();
+    }
+    public List <DetalleFactura> getDetallesFactura()
+	{
+		return this.detallesFactura;
+	}
+	public void setDetallesFactura(List<DetalleFactura> detallesFactura) {
+		this.detallesFactura = detallesFactura;
+	}
+	public void agregarDetalleFactura(DetalleFactura objDetalleFactura)
+	{
+		this.detallesFactura.add(objDetalleFactura);
+	}
+
 }
- */

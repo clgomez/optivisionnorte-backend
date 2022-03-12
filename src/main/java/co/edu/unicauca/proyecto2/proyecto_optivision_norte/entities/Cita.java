@@ -2,6 +2,7 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 
 import javax.persistence.*;
 
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.CitaDTO;
 @Entity
 @Table(name = "Cita")
 public class Cita {
@@ -17,10 +18,6 @@ public class Cita {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente objCliente;
 
-    @ManyToOne
-    @JoinColumn(name = "id_empleado", nullable = false)
-    private Empleado objEmpleado;
-            
     public Long getId() {
         return id;
     }
@@ -51,14 +48,18 @@ public class Cita {
     public void setObjCliente(Cliente objCliente) {
         this.objCliente = objCliente;
     }
-    public Empleado getObjEmpleado() {
-        return objEmpleado;
-    }
-    public void setObjEmpleado(Empleado objEmpleado) {
-        this.objEmpleado = objEmpleado; 
+   
+    public Cita() {
     }
     
-    public Cita() {
+    public void convertirDTO_a_Cita (CitaDTO objCitaDTO)
+    {
+        //this.id = objCitaDTO.getId();
+        this.fecha = objCitaDTO.getFecha();
+        this.hora = objCitaDTO.getHora();
+        this.estado = objCitaDTO.isEstado();
+        this.objCliente = new Cliente();
+        this.objCliente.setId(objCitaDTO.getIdCliente());
     }
 }
  

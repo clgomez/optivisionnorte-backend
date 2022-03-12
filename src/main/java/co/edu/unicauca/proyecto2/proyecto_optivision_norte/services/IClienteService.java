@@ -2,7 +2,6 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Cliente;
 
 public interface IClienteService {
@@ -11,5 +10,6 @@ public interface IClienteService {
     public List <Cliente> findAll();
     public Cliente update(Long idCliente, Cliente objCliente);
     public boolean delete(Long idCliente);
+    public Optional <Cliente> findByIdentificacion(Long identificacionCliente);
     
 }

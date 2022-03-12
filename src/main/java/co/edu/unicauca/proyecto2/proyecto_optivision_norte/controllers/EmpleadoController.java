@@ -1,24 +1,17 @@
 package co.edu.unicauca.proyecto2.proyecto_optivision_norte.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-
-import javax.validation.Valid;
-
+import java.util.*;
+import javax.validation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Empleado;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IEmpleadoService;
 
 @RestController
+@CrossOrigin(origins={"http://localhost:4400","http://localhost:4200"})
 @RequestMapping("/api/empleado")
 public class EmpleadoController {
 
@@ -31,12 +24,12 @@ public class EmpleadoController {
     	Empleado empleado = new Empleado();
 
         try {
-            Random aleatorio = new Random(System.currentTimeMillis());
-            Long longAleatorio = aleatorio.nextLong();
-            objEmpleado.setId(longAleatorio);
+          
             empleado = this.empleadoService.save(objEmpleado);
-            empleado.setCitas(null);
+           
             empleado.setConsultas(null);
+            empleado.setFacturas(null);
+            empleado.setPedidos(null);
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la inserción en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());
@@ -48,17 +41,18 @@ public class EmpleadoController {
 
 
 	@GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable("id") Long IdEmpleado){
+    public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idEmpleado){
         Map<String, Object> respuesta = new HashMap<>();
-        Empleado objEmpleado = new Empleado();
+        Empleado empleado = new Empleado();
         
         try {
-            Optional<Empleado> empleado = this.empleadoService.findById(IdEmpleado);
-            if (empleado.isPresent()) {
-                objEmpleado = empleado.get();
-                objEmpleado.setCitas(null);
-                objEmpleado.setConsultas(null);
-                return new ResponseEntity<>(objEmpleado, HttpStatus.OK);
+            Optional<Empleado> optEmpleado = this.empleadoService.findById(idEmpleado);
+            if (optEmpleado.isPresent()) {
+                empleado = optEmpleado.get();
+               
+                empleado.setConsultas(null);
+                empleado.setPedidos(null);
+                return new ResponseEntity<Empleado>(empleado, HttpStatus.OK);
             } else {
                 respuesta.put("mensaje", "No se encontró el empleado");
                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
@@ -77,29 +71,31 @@ public class EmpleadoController {
         List <Empleado> ArrayEmpleados = new ArrayList<>();                
 		List <Empleado> empleados = this.empleadoService.findAll();
 		if (!empleados.isEmpty()) {
-            for(Empleado objEmpleado: empleados)
+            for(Empleado empleado: empleados)
             {
-                objEmpleado.setCitas(null);
-                objEmpleado.setConsultas(null);
-                ArrayEmpleados.add(objEmpleado);
+               
+                empleado.setConsultas(null);
+                empleado.setFacturas(null);
+                empleado.setPedidos(null);
+                ArrayEmpleados.add(empleado);
             }
-			respuesta = new ResponseEntity<>(empleados, HttpStatus.OK);
+			respuesta = new ResponseEntity< List <Empleado>>(empleados, HttpStatus.OK);
 		}
 		return respuesta;
 	} 
 
-	@PutMapping("/actualizar")
-    public ResponseEntity<?> actualizar(@Valid @RequestBody Empleado objEmpleado){
+	@PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable("id") Long idEmpleado, 
+                                        @Valid @RequestBody Empleado objEmpleado){
         Map<String, Object> respuesta = new HashMap<>();
         Empleado empleado = new Empleado();
 
         try {
-            /*Random aleatorio = new Random(System.currentTimeMillis());
-            Long longAleatorio = aleatorio.nextLong();
-            objEmpleado.setId(longAleatorio);*/
-            empleado = this.empleadoService.save(objEmpleado);
-            empleado.setCitas(null);
+            empleado = this.empleadoService.update(idEmpleado, objEmpleado);
+           
             empleado.setConsultas(null);
+            empleado.setFacturas(null);
+            empleado.setPedidos(null);
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al actualizar en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());
@@ -110,11 +106,11 @@ public class EmpleadoController {
     }
 
 	@DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarPorId(@PathVariable("id") Long IdEmpleado){
+    public ResponseEntity<?> eliminarPorId(@PathVariable("id") Long idEmpleado){
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
-            empleadoService.delete(IdEmpleado);
+            empleadoService.delete(idEmpleado);
             respuesta.put("Exito","Se elimino correctamente");
             return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (DataAccessException e){
@@ -125,13 +121,20 @@ public class EmpleadoController {
     }
 
     @GetMapping("/validarempleado")
-    public ResponseEntity<?> iniciarSesion(@RequestParam Long idEmpleado, @RequestParam String password){
+    public ResponseEntity<?> iniciarSesion(@RequestParam Long idEmpleado, 
+                                           @RequestParam String password){
         Map<String, Object> respuesta = new HashMap<>();
+        Empleado empleado = new Empleado();
         
         try {
-            Optional<Empleado> empleado = this.empleadoService.validarEmpleado(idEmpleado, password);
-            if (empleado.isPresent()) {
-                return new ResponseEntity<>(empleado.get(), HttpStatus.OK);
+            Optional<Empleado> optEmpleado = this.empleadoService.validarEmpleado(idEmpleado, password);
+            if (optEmpleado.isPresent()) {
+                empleado = optEmpleado.get();
+              
+                empleado.setConsultas(null);
+                empleado.setFacturas(null);
+                empleado.setPedidos(null);
+                return new ResponseEntity<Empleado>(empleado, HttpStatus.OK);
             } else {
                 respuesta.put("mensaje", "No se encontró el empleado");
                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);

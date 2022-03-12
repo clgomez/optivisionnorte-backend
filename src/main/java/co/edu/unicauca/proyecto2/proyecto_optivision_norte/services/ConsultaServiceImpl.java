@@ -2,10 +2,8 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Consulta;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.repositories.ConsultaRepository;
 
@@ -37,14 +35,17 @@ public class ConsultaServiceImpl implements IConsultaService{
     public Consulta update(Long idConsulta, Consulta objConsulta)
     {
         if(this.consultaRepository.existsById(idConsulta))
+        {
+            objConsulta.setId(idConsulta);
             return this.consultaRepository.save(objConsulta);
+        }
         else return null;    
     }
 
     @Override
     public boolean delete(Long idConsulta)
     {
-        Optional <Consulta> optConsulta = this.findById(idConsulta);
+        Optional <Consulta> optConsulta = this.consultaRepository.findById(idConsulta);
         if(optConsulta.isPresent())
         {   this.consultaRepository.deleteById(idConsulta);
             return true; 

@@ -1,15 +1,10 @@
 package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 
 import java.util.List;
-
 import javax.persistence.*;
-
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
-
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-
-
 
 @Entity
 @Table(name = "Consulta")
@@ -65,8 +60,7 @@ public class Consulta {
     public void setAntecedentes(String antecedentes) {
         this.antecedentes = antecedentes;
     }
-  
-    public List<Object> getExamenes() {
+      public List<Object> getExamenes() {
         return examenes;
     }
     public void setExamenes(List<Object> examenes) {
@@ -162,6 +156,7 @@ public class Consulta {
     public void setObjEmpleado(Empleado objEmpleado) {
         this.objEmpleado = objEmpleado;
     } 
+    
     public Consulta() {
     } 
     

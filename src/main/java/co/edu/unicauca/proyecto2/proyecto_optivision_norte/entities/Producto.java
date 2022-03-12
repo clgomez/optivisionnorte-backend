@@ -1,10 +1,7 @@
 package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Producto")
@@ -18,6 +15,13 @@ public class Producto {
     private String marca;
     private String referencia;
     private String material;
+    private String precio; 
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objProducto")
+	private List <DetalleFactura> detallesFactura; 
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "objProducto")
+	private List <DetallePedido> detallesPedido; 
     
     public Long getId() {
         return id;
@@ -55,8 +59,35 @@ public class Producto {
     public void setMaterial(String material) {
         this.material = material;
     }
-    public Producto() {
+    public String getPrecio() {
+        return precio;
     }
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+    public Producto() {
+        this.detallesFactura = new ArrayList<DetalleFactura>();
+        this.detallesPedido = new ArrayList<DetallePedido>();
+    }
+    public List<DetalleFactura> getDetallesFactura() {
+        return detallesFactura;
+    }
+    public void setDetallesFactura(List<DetalleFactura> detallesFactura) {
+        this.detallesFactura = detallesFactura;
+    }
+    public void agregarDetalleFactura(DetalleFactura objDetalleFactura)
+	{
+		this.detallesFactura.add(objDetalleFactura);
+	}
+    public List<DetallePedido> getDetallesPedido() {
+        return detallesPedido;
+    }
+    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
+        this.detallesPedido = detallesPedido;
+    }
+    public void agregarDetallePedido(DetallePedido objDetallePedido)
+	{
+		this.detallesPedido.add(objDetallePedido);
+	}
 
-    
 }

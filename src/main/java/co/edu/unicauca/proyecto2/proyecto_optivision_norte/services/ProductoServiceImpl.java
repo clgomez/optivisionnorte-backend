@@ -2,10 +2,8 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Producto;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.repositories.ProductoRepository;
 
@@ -34,13 +32,16 @@ public class ProductoServiceImpl implements IProductoService{
     @Override
     public Producto update(Long idProducto, Producto objProducto) {
         if(this.productoRepository.existsById(idProducto))
+        {
+            objProducto.setId(idProducto);
             return this.productoRepository.save(objProducto);
+        }
         else return null;   
     }
 
     @Override
     public boolean delete(Long idProducto) {
-        Optional <Producto> optCliente = this.findById(idProducto);
+        Optional <Producto> optCliente = this.productoRepository.findById(idProducto);
         if(optCliente.isPresent())
         {   this.productoRepository.deleteById(idProducto);
             return true; 
