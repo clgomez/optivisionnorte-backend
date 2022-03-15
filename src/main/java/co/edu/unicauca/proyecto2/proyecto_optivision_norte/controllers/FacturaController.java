@@ -2,13 +2,14 @@
 package co.edu.unicauca.proyecto2.proyecto_optivision_norte.controllers;
 
 import java.util.*;
-import org.json.*;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.FacturaDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Factura;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IFacturaService;
 
@@ -21,24 +22,18 @@ public class FacturaController {
     private IFacturaService facturaService;
 
 	@PostMapping("/guardar")
-    public ResponseEntity<?> guardar(@Valid @RequestBody Factura objFactura){
+    public ResponseEntity<?> guardar(@Valid @RequestBody FacturaDTO objFacturaDTO){
         Map<String, Object> respuesta = new HashMap<>();
+        Factura objFactura = new Factura();
         Factura factura = new Factura();
-               
-        JSONObject objJSONFactura = new JSONObject();
+        FacturaDTO facturaDTO = new FacturaDTO();
 
         try {
-     
+            
+            objFactura.convertirDTO_a_Factura(objFacturaDTO);
             factura = this.facturaService.save(objFactura);
-
-            objJSONFactura.put("id",factura.getId());
-            objJSONFactura.put("fecha",factura.getFecha());
-            objJSONFactura.put("total",factura.getTotal());
-            objJSONFactura.put("abono",factura.getAbono());
-            objJSONFactura.put("saldo",factura.getSaldo());
-            objJSONFactura.put("id_cliente",factura.getObjCliente().getId());
-            objJSONFactura.put("id_empleado",factura.getObjEmpleado().getId());
-         
+            facturaDTO.convertirFactura_a_DTO(factura);
+      
          
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la inserción en la base de datos");
@@ -46,33 +41,24 @@ public class FacturaController {
             return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<JSONObject>(objJSONFactura, HttpStatus.OK);
+        return new ResponseEntity<FacturaDTO>(facturaDTO, HttpStatus.OK);
     }
 
 	@GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idFactura){
         Map<String, Object> respuesta = new HashMap<>();
-        JSONObject objJSONFactura = new JSONObject(); 
+        FacturaDTO facturaDTO = new FacturaDTO(); 
 
         try {
             Optional<Factura> optFactura = this.facturaService.findById(idFactura);
             Factura factura = new Factura();
-      
+
             if (optFactura.isPresent()) {
                 
                factura = optFactura.get();
+               facturaDTO.convertirFactura_a_DTO(factura); 
 
-               objJSONFactura.put("id",factura.getId());
-               objJSONFactura.put("fecha",factura.getFecha());
-               objJSONFactura.put("total",factura.getTotal());
-               objJSONFactura.put("abono",factura.getAbono());
-               objJSONFactura.put("saldo",factura.getSaldo());
-               objJSONFactura.put("id_cliente",factura.getObjCliente().getId());
-               objJSONFactura.put("id_empleado",factura.getObjEmpleado().getId());
-                         
-               System.out.print(objJSONFactura);
-
-               return new ResponseEntity<JSONObject>(objJSONFactura, HttpStatus.OK);
+               return new ResponseEntity<FacturaDTO>(facturaDTO, HttpStatus.OK);
             } else {
                 respuesta.put("mensaje", "No se encontró la factura");
                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
@@ -89,46 +75,35 @@ public class FacturaController {
 		ResponseEntity<?> respuesta = new ResponseEntity<>("No hay ninguna factura registrada", 
 				HttpStatus.NOT_FOUND);
         
-        JSONArray ArrayJSONFacturas = new JSONArray();        
+        List <FacturaDTO> ArrayFacturasDTO = new ArrayList<>();        
 		List <Factura> facturas = this.facturaService.findAll();
 		if (!facturas.isEmpty()) {
              
             for(Factura factura: facturas)
             {
-               JSONObject objJSONFactura = new JSONObject();
-               objJSONFactura.put("id",factura.getId());
-               objJSONFactura.put("fecha",factura.getFecha());
-               objJSONFactura.put("total",factura.getTotal());
-               objJSONFactura.put("abono",factura.getAbono());
-               objJSONFactura.put("saldo",factura.getSaldo());
-               objJSONFactura.put("id_cliente",factura.getObjCliente().getId());
-               objJSONFactura.put("id_empleado",factura.getObjEmpleado().getId());
-              
+               FacturaDTO facturaDTO = new FacturaDTO();
+               facturaDTO.convertirFactura_a_DTO(factura);
 
-               ArrayJSONFacturas.put(objJSONFactura);
+               ArrayFacturasDTO.add(facturaDTO);
             }
-			respuesta = new ResponseEntity<JSONArray>(ArrayJSONFacturas, HttpStatus.OK);
+			respuesta = new ResponseEntity<List <FacturaDTO>>(ArrayFacturasDTO, HttpStatus.OK);
 		}
 		return respuesta;
 	} 
 
 	@PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizar(@PathVariable("id") Long idFactura, 
-                                        @Valid @RequestBody Factura objFactura){
+                                        @Valid @RequestBody FacturaDTO objFacturaDTO){
         Map<String, Object> respuesta = new HashMap<>();
+        Factura objFactura = new Factura();
         Factura factura = new Factura();
-        JSONObject objJSONFactura = new JSONObject();
+        FacturaDTO facturaDTO = new FacturaDTO();
         
         try {
+            objFactura.convertirDTO_a_Factura(objFacturaDTO);
             factura = this.facturaService.update(idFactura, objFactura);
+            facturaDTO.convertirFactura_a_DTO(factura);
 
-            objJSONFactura.put("id",factura.getId());
-            objJSONFactura.put("fecha",factura.getFecha());
-            objJSONFactura.put("total",factura.getTotal());
-            objJSONFactura.put("abono",factura.getAbono());
-            objJSONFactura.put("saldo",factura.getSaldo());
-            objJSONFactura.put("id_cliente",factura.getObjCliente().getId());
-            objJSONFactura.put("id_empleado",factura.getObjEmpleado().getId());
                 
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al actualizar en la base de datos");
@@ -137,7 +112,7 @@ public class FacturaController {
         }
 
 
-        return new ResponseEntity<JSONObject>(objJSONFactura, HttpStatus.OK);
+        return new ResponseEntity<FacturaDTO>(facturaDTO, HttpStatus.OK);
     }
 
 	@DeleteMapping("/eliminar/{id}")
@@ -145,9 +120,14 @@ public class FacturaController {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
-            facturaService.delete(idFactura);
-            respuesta.put("Exito","Se elimino correctamente");
-            return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+            if(facturaService.delete(idFactura))
+            {   respuesta.put("Exito","Se elimino correctamente");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.OK);
+            }else
+            {
+                respuesta.put("Mensaje","La factura no existe");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
+            }
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la eliminacion en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());

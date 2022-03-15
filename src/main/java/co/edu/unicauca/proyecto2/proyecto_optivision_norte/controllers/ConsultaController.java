@@ -3,14 +3,13 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.controllers;
 import java.util.*;
 
 import javax.validation.Valid;
-import org.json.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ConsultaDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Consulta;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IConsultaService;
 
@@ -23,34 +22,17 @@ public class ConsultaController {
     private IConsultaService consultaService;
 
 	@PostMapping("/guardar")
-    public ResponseEntity<?> guardar(@Valid @RequestBody Consulta objConsulta){
+    public ResponseEntity<?> guardar(@Valid @RequestBody ConsultaDTO objConsultaDTO){
         Map<String, Object> respuesta = new HashMap<>();
-        //Map<String, Object> objMapConsulta = new HashMap<>();
-        JSONObject objJSONConsulta = new JSONObject();
+        Consulta objConsulta = new Consulta();
         Consulta consulta = new Consulta();
+        ConsultaDTO consultaDTO = new ConsultaDTO();
 
         try {
+            objConsulta.convertirDTO_a_Consulta(objConsultaDTO);
             consulta = this.consultaService.save(objConsulta);
-            
-            objJSONConsulta.put("id",consulta.getId());
-            objJSONConsulta.put("motivo",consulta.getMotivo());
-            objJSONConsulta.put("antecedentes",consulta.getAntecedentes());
-            objJSONConsulta.put("examenes",consulta.getExamenes());
-            objJSONConsulta.put("fecha",consulta.getFecha());
-            objJSONConsulta.put("hirschberg",consulta.getHirschberg());
-            objJSONConsulta.put("ducciones",consulta.getDucciones());
-            objJSONConsulta.put("versiones",consulta.getVersiones());
-            objJSONConsulta.put("disposicion",consulta.getDisposicion());
-            objJSONConsulta.put("remision",consulta.getRemision());                
-            objJSONConsulta.put("codigo",consulta.getCodigo());
-            objJSONConsulta.put("diagnostico",consulta.getDiagnostico());
-            objJSONConsulta.put("control",consulta.getControl());
-            objJSONConsulta.put("tipo de lente",consulta.getTipoLente());
-            objJSONConsulta.put("distancia pupilar",consulta.getDistanciaPupilar());
-            objJSONConsulta.put("tratamiento",consulta.getTratamiento());
-            objJSONConsulta.put("observaciones",consulta.getObservaciones());
-            objJSONConsulta.put("id_cliente",consulta.getObjCliente().getId());
-            objJSONConsulta.put("id_empleado",consulta.getObjEmpleado().getId());
+            consultaDTO.convertirConsulta_a_DTO(consulta);
+           
             
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la inserción en la base de datos");
@@ -58,7 +40,7 @@ public class ConsultaController {
             return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<JSONObject>(objJSONConsulta, HttpStatus.OK);
+        return new ResponseEntity<ConsultaDTO>(consultaDTO, HttpStatus.OK);
     }
 
 
@@ -66,35 +48,16 @@ public class ConsultaController {
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idConsulta){
         Map<String, Object> respuesta = new HashMap<>();
 
-        JSONObject objJSONConsulta = new JSONObject();
-            
+        ConsultaDTO consultaDTO = new ConsultaDTO();    
+         
         try {
             Optional<Consulta> optConsulta = this.consultaService.findById(idConsulta);
             Consulta consulta = new Consulta();
             if (optConsulta.isPresent()) {
                 consulta = optConsulta.get();
-                
-                objJSONConsulta.put("id",consulta.getId());
-                objJSONConsulta.put("motivo",consulta.getMotivo());
-                objJSONConsulta.put("antecedentes",consulta.getAntecedentes());
-                objJSONConsulta.put("examenes",consulta.getExamenes());
-                objJSONConsulta.put("fecha",consulta.getFecha());
-                objJSONConsulta.put("hirschberg",consulta.getHirschberg());
-                objJSONConsulta.put("ducciones",consulta.getDucciones());
-                objJSONConsulta.put("versiones",consulta.getVersiones());
-                objJSONConsulta.put("disposicion",consulta.getDisposicion());
-                objJSONConsulta.put("remision",consulta.getRemision());                
-                objJSONConsulta.put("codigo",consulta.getCodigo());
-                objJSONConsulta.put("diagnostico",consulta.getDiagnostico());
-                objJSONConsulta.put("control",consulta.getControl());
-                objJSONConsulta.put("tipo de lente",consulta.getTipoLente());
-                objJSONConsulta.put("distancia pupilar",consulta.getDistanciaPupilar());
-                objJSONConsulta.put("tratamiento",consulta.getTratamiento());
-                objJSONConsulta.put("observaciones",consulta.getObservaciones());
-                objJSONConsulta.put("id_cliente",consulta.getObjCliente().getId());
-                objJSONConsulta.put("id_empleado",consulta.getObjEmpleado().getId());
+                consultaDTO.convertirConsulta_a_DTO(consulta);
 
-                return new ResponseEntity<JSONObject>(objJSONConsulta, HttpStatus.OK);
+                return new ResponseEntity<ConsultaDTO>(consultaDTO, HttpStatus.OK);
             } else {
                 respuesta.put("mensaje", "No se encontró la consulta");
                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
@@ -111,69 +74,35 @@ public class ConsultaController {
 		ResponseEntity<?> respuesta = new ResponseEntity<>("No hay ninguna consulta registrada", 
 				HttpStatus.NOT_FOUND);
 
-        JSONArray ArrayJSONConsultas = new JSONArray();        
+        List <ConsultaDTO> ArrayConsultasDTO = new ArrayList<>();        
         List <Consulta> consultas = this.consultaService.findAll();
         
 		if (!consultas.isEmpty()) {
             for(Consulta consulta: consultas)
             {
-                JSONObject objJSONConsulta = new JSONObject();
-                objJSONConsulta.put("id",consulta.getId());
-                objJSONConsulta.put("motivo",consulta.getMotivo());
-                objJSONConsulta.put("antecedentes",consulta.getAntecedentes());
-                objJSONConsulta.put("examenes",consulta.getExamenes());
-                objJSONConsulta.put("fecha",consulta.getFecha());
-                objJSONConsulta.put("hirschberg",consulta.getHirschberg());
-                objJSONConsulta.put("ducciones",consulta.getDucciones());
-                objJSONConsulta.put("versiones",consulta.getVersiones());
-                objJSONConsulta.put("disposicion",consulta.getDisposicion());
-                objJSONConsulta.put("remision",consulta.getRemision());                
-                objJSONConsulta.put("codigo",consulta.getCodigo());
-                objJSONConsulta.put("diagnostico",consulta.getDiagnostico());
-                objJSONConsulta.put("control",consulta.getControl());
-                objJSONConsulta.put("tipo de lente",consulta.getTipoLente());
-                objJSONConsulta.put("distancia pupilar",consulta.getDistanciaPupilar());
-                objJSONConsulta.put("tratamiento",consulta.getTratamiento());
-                objJSONConsulta.put("observaciones",consulta.getObservaciones());
-                objJSONConsulta.put("id_cliente",consulta.getObjCliente().getId());
-                objJSONConsulta.put("id_empleado",consulta.getObjEmpleado().getId());
-                ArrayJSONConsultas.put(objJSONConsulta);
+              ConsultaDTO consultaDTO = new ConsultaDTO(); 
+              consultaDTO.convertirConsulta_a_DTO(consulta);
+              ArrayConsultasDTO.add(consultaDTO);
                
             }
-			respuesta = new ResponseEntity<JSONArray>(ArrayJSONConsultas, HttpStatus.OK);
+			respuesta = new ResponseEntity<List <ConsultaDTO>>(ArrayConsultasDTO, HttpStatus.OK);
 		}
 		return respuesta;
 	} 
 
 	@PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizar(@PathVariable("id") Long idConsulta, 
-                                        @Valid @RequestBody Consulta objConsulta){
+                                        @Valid @RequestBody ConsultaDTO objConsultaDTO){
         Map<String, Object> respuesta = new HashMap<>();
+        Consulta objConsulta = new Consulta();
         Consulta consulta = new Consulta();
-        JSONObject objJSONConsulta = new JSONObject();
+        ConsultaDTO consultaDTO = new ConsultaDTO();
 
         try {
+            objConsulta.convertirDTO_a_Consulta(objConsultaDTO);
             consulta = this.consultaService.update(idConsulta, objConsulta);
+            consultaDTO.convertirConsulta_a_DTO(consulta);
 
-            objJSONConsulta.put("id",consulta.getId());
-            objJSONConsulta.put("motivo",consulta.getMotivo());
-            objJSONConsulta.put("antecedentes",consulta.getAntecedentes());
-            objJSONConsulta.put("examenes",objConsulta.getExamenes());
-            objJSONConsulta.put("fecha",consulta.getFecha());
-            objJSONConsulta.put("hirschberg",consulta.getHirschberg());
-            objJSONConsulta.put("ducciones",consulta.getDucciones());
-            objJSONConsulta.put("versiones",consulta.getVersiones());
-            objJSONConsulta.put("disposicion",consulta.getDisposicion());
-            objJSONConsulta.put("remision",consulta.getRemision());                
-            objJSONConsulta.put("codigo",consulta.getCodigo());
-            objJSONConsulta.put("diagnostico",consulta.getDiagnostico());
-            objJSONConsulta.put("control",consulta.getControl());
-            objJSONConsulta.put("tipo de lente",consulta.getTipoLente());
-            objJSONConsulta.put("distancia pupilar",consulta.getDistanciaPupilar());
-            objJSONConsulta.put("tratamiento",consulta.getTratamiento());
-            objJSONConsulta.put("observaciones",consulta.getObservaciones());
-            objJSONConsulta.put("id_cliente",consulta.getObjCliente().getId()); 
-            objJSONConsulta.put("id_empleado",consulta.getObjEmpleado().getId());           
 
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al actualizar en la base de datos");
@@ -181,7 +110,7 @@ public class ConsultaController {
             return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<JSONObject>(objJSONConsulta, HttpStatus.OK);
+        return new ResponseEntity<ConsultaDTO>(consultaDTO, HttpStatus.OK);
     }
 
 	@DeleteMapping("/eliminar/{id}")
@@ -189,9 +118,14 @@ public class ConsultaController {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
-            consultaService.delete(idConsulta);
-            respuesta.put("Exito","Se elimino correctamente");
-            return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+            if(consultaService.delete(idConsulta))
+            {   respuesta.put("Exito","Se elimino correctamente");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.OK);
+            }else
+            {
+                respuesta.put("Mensaje","La consulta no existe");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
+            }
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la eliminacion en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());

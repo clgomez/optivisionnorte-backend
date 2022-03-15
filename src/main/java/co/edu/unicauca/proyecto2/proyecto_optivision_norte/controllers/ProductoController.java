@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ProductoDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Producto;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IProductoService;
 
@@ -20,14 +22,17 @@ public class ProductoController {
     private IProductoService productoService;
 
 	@PostMapping("/guardar")
-    public ResponseEntity<?> guardar(@Valid @RequestBody Producto objProducto){
+    public ResponseEntity<?> guardar(@Valid @RequestBody ProductoDTO objProductoDTO){
         Map<String, Object> respuesta = new HashMap<>();
+        Producto objProducto = new Producto();
     	Producto producto = new Producto();
+        ProductoDTO productoDTO = new ProductoDTO();
+        
     
         try {
+            objProducto.convertirDTO_a_Producto(objProductoDTO);
             producto = this.productoService.save(objProducto);
-            producto.setDetallesFactura(null);
-            producto.setDetallesPedido(null);
+            productoDTO.convertirProducto_a_DTO(producto);
                             
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la inserción en la base de datos");
@@ -35,7 +40,7 @@ public class ProductoController {
             return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<Producto>(producto, HttpStatus.OK);
+        return new ResponseEntity<ProductoDTO>(productoDTO, HttpStatus.OK);
     }
 
 
@@ -43,14 +48,15 @@ public class ProductoController {
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idProducto){
         Map<String, Object> respuesta = new HashMap<>();
             Producto producto = new Producto();
+            ProductoDTO productoDTO = new ProductoDTO();
         try {
             Optional<Producto> optProducto = this.productoService.findById(idProducto);
             if (optProducto.isPresent()) {
                 producto = optProducto.get();
-                producto.setDetallesFactura(null);
-                producto.setDetallesPedido(null);
+                productoDTO.convertirProducto_a_DTO(producto);
+          
                                        
-                return new ResponseEntity<>(producto, HttpStatus.OK);
+                return new ResponseEntity<ProductoDTO>(productoDTO, HttpStatus.OK);
             } else {
                 respuesta.put("mensaje", "No se encontró el producto");
                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
@@ -67,30 +73,32 @@ public class ProductoController {
 		ResponseEntity<?> respuesta = new ResponseEntity<>("No hay ningun producto registrado", 
 				HttpStatus.NOT_FOUND);
 
-        List <Producto> ArrayProductos = new ArrayList<>();            
+        List <ProductoDTO> ArrayProductosDTO = new ArrayList<>();            
 		List <Producto> productos = this.productoService.findAll();
 		if (!productos.isEmpty()) {
             for(Producto producto: productos)
             {
-                producto.setDetallesFactura(null);
-                producto.setDetallesPedido(null);   
-                ArrayProductos.add(producto);
+                ProductoDTO productoDTO = new ProductoDTO();
+                productoDTO.convertirProducto_a_DTO(producto);
+                ArrayProductosDTO.add(productoDTO);
             }
          
-			respuesta = new ResponseEntity<List <Producto>>(ArrayProductos, HttpStatus.OK);
+			respuesta = new ResponseEntity<List <ProductoDTO>>(ArrayProductosDTO, HttpStatus.OK);
 		}
 		return respuesta;
 	} 
 
 	@PutMapping("/actualizar/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable("id") Long idProducto, @Valid @RequestBody Producto objProducto){
+    public ResponseEntity<?> actualizar(@PathVariable("id") Long idProducto, @Valid @RequestBody ProductoDTO objProductoDTO){
         Map<String, Object> respuesta = new HashMap<>();
+        Producto objProducto = new Producto();
         Producto producto = new Producto();
+        ProductoDTO productoDTO = new ProductoDTO();
 
         try {
+            objProducto.convertirDTO_a_Producto(objProductoDTO);
             producto = this.productoService.update(idProducto, objProducto);
-            producto.setDetallesFactura(null);
-            producto.setDetallesPedido(null);   
+            productoDTO.convertirProducto_a_DTO(producto);
           
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al actualizar en la base de datos");
@@ -98,7 +106,7 @@ public class ProductoController {
             return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<Producto>(producto, HttpStatus.OK);
+        return new ResponseEntity<ProductoDTO>(productoDTO, HttpStatus.OK);
     }
 
 	@DeleteMapping("/eliminar/{id}")
@@ -106,9 +114,14 @@ public class ProductoController {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
-            productoService.delete(idProducto);
-            respuesta.put("Exito","Se elimino correctamente");
-            return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+            if(productoService.delete(idProducto))
+            {   respuesta.put("Exito","Se elimino correctamente");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.OK);
+            }
+            else
+            {   respuesta.put("Mensaje","el producto no existe");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
+            }
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la eliminacion en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());

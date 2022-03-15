@@ -1,7 +1,6 @@
 package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 
 import javax.persistence.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.CitaDTO;
 @Entity
 @Table(name = "Cita")

@@ -2,6 +2,8 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 
 import java.util.*;
 import javax.persistence.*;
+
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.EmpleadoDTO;
 @Entity
 @Table(name = "Empleado")
 @PrimaryKeyJoinColumn(name = "id_persona")
@@ -81,4 +83,21 @@ public class Empleado extends Persona{
 		this.pedidos.add(objPedido);
 	}
 	
+	public void convertirDTO_a_Empleado(EmpleadoDTO objEmpleadoDTO)
+    {
+        //this.setId(objEmpleadoDTO.getId());
+	    this.setTipoIdentificacion(objEmpleadoDTO.getTipoIdentificacion()); 
+	    this.setIdentificacion(objEmpleadoDTO.getIdentificacion());
+	    this.setNombres(objEmpleadoDTO.getNombres());
+        this.setApellidos(objEmpleadoDTO.getApellidos());
+	    this.setDireccion(objEmpleadoDTO.getDireccion());
+        this.setTelefono(objEmpleadoDTO.getTelefono());
+	    this.setEmail(objEmpleadoDTO.getEmail());
+		
+        this.password = objEmpleadoDTO.getPassword();
+	    this.rol = objEmpleadoDTO.getRol();
+	    this.estado = objEmpleadoDTO.getEstado();
+
+    }
+
 }

@@ -1,15 +1,10 @@
-package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
+package co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Consulta;
 
-import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ConsultaDTO;
-
-@Entity
-@Table(name = "Consulta")
-public class Consulta {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ConsultaDTO implements Serializable{
+    
     private Long id;
     private String motivo;
     private String antecedentes;
@@ -51,14 +46,9 @@ public class Consulta {
     private String tratamiento;
     private String observaciones;
 
-    @ManyToOne
-    @JoinColumn(name = "id_cliente", nullable = false)
-    private Cliente objCliente;
-
-    @ManyToOne
-    @JoinColumn(name = "id_empleado", nullable = false)
-    private Empleado objEmpleado;
-
+    private Long idCliente;
+    private Long idEmpleado;
+    
     public Long getId() {
         return id;
     }
@@ -77,7 +67,6 @@ public class Consulta {
     public void setAntecedentes(String antecedentes) {
         this.antecedentes = antecedentes;
     }
-   
     public Long getAVLSC_OD() {
         return AVLSC_OD;
     }
@@ -210,8 +199,6 @@ public class Consulta {
     public void setKAPPA_OI(Long kAPPA_OI) {
         KAPPA_OI = kAPPA_OI;
     }
-
-
     public String getFecha() {
         return fecha;
     }
@@ -290,69 +277,69 @@ public class Consulta {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    public Cliente getObjCliente() {
-        return objCliente;
+    public Long getIdCliente() {
+        return idCliente;
     }
-    public void setObjCliente(Cliente objCliente) {
-        this.objCliente = objCliente;
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
-    public Empleado getObjEmpleado() {
-        return objEmpleado;
+    public Long getIdEmpleado() {
+        return idEmpleado;
     }
-    public void setObjEmpleado(Empleado objEmpleado) {
-        this.objEmpleado = objEmpleado;
-    } 
-    
-    public Consulta() {
-    } 
+    public void setIdEmpleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
 
-    public void convertirDTO_a_Consulta (ConsultaDTO objConsultaDTO)
-    {
-        //this.id = objConsultaDTO.getId();
-        this.motivo = objConsultaDTO.getMotivo();
-        this.antecedentes = objConsultaDTO.getAntecedentes();
-    
-        this.AVLSC_OD = objConsultaDTO.getAVLSC_OD();
-        this.AVLSC_OI = objConsultaDTO.getAVLSC_OI();
-        this.AVLPC_OD = objConsultaDTO.getAVLPC_OD();
-        this.AVPSC_OI = objConsultaDTO.getAVPSC_OI();
-        this.PH_OD = objConsultaDTO.getPH_OD();
-        this.PH_OI = objConsultaDTO.getPH_OI();
-        this.LENS_OD = objConsultaDTO.getLENS_OD();
-        this.LENS_OI = objConsultaDTO.getLENS_OI();
-        this.BIOM_OD = objConsultaDTO.getBIOM_OD();
-        this.BIOM_OI = objConsultaDTO.getBIOM_OI();
-        this.REF_OD = objConsultaDTO.getREF_OD();
-        this.REF_OI = objConsultaDTO.getREF_OI();
-        this.QUER_OD = objConsultaDTO.getQUER_OD();
-        this.QUER_OI = objConsultaDTO.getQUER_OI();
-        this.PIO_OD = objConsultaDTO.getPIO_OD();
-        this.PIO_OI = objConsultaDTO.getPIO_OI();
-        this.TESTC_OD = objConsultaDTO.getTESTC_OD();
-        this.TESTC_OI = objConsultaDTO.getTESTC_OI();
-        this.OFTA_OD = objConsultaDTO.getOFTA_OD();
-        this.OFTA_OI = objConsultaDTO.getOFTA_OI();
-        this.KAPPA_OD = objConsultaDTO.getKAPPA_OD();
-        this.KAPPA_OI = objConsultaDTO.getKAPPA_OI();
-    
-        this.fecha = objConsultaDTO.getFecha();
-        this.hirschberg = objConsultaDTO.getHirschberg();
-        this.ducciones = objConsultaDTO.getDucciones();
-        this.versiones = objConsultaDTO.getVersiones();
-        this.disposicion = objConsultaDTO.getDisposicion();
-        this.remision = objConsultaDTO.getRemision();
-        this.codigo = objConsultaDTO.getCodigo();
-        this.diagnostico = objConsultaDTO.getDiagnostico();
-        this.control = objConsultaDTO.getControl();
-        this.tipoLente = objConsultaDTO.getTipoLente();
-        this.distanciaPupilar = objConsultaDTO.getDistanciaPupilar();
-        this.tratamiento = objConsultaDTO.getTratamiento();
-        this.observaciones = objConsultaDTO.getObservaciones();
-    
-        this.objCliente = new Cliente();
-        objCliente.setId(objConsultaDTO.getIdCliente());
-        this.objEmpleado = new Empleado();
-        this.objEmpleado.setId(objConsultaDTO.getIdEmpleado());
+    public ConsultaDTO() {
     }
+
+    public void convertirConsulta_a_DTO (Consulta objConsulta)
+    {
+        this.id = objConsulta.getId();
+        this.motivo = objConsulta.getMotivo();
+        this.antecedentes = objConsulta.getAntecedentes();
     
+        this.AVLSC_OD = objConsulta.getAVLSC_OD();
+        this.AVLSC_OI = objConsulta.getAVLSC_OI();
+        this.AVLPC_OD = objConsulta.getAVLPC_OD();
+        this.AVPSC_OI = objConsulta.getAVPSC_OI();
+        this.PH_OD = objConsulta.getPH_OD();
+        this.PH_OI = objConsulta.getPH_OI();
+        this.LENS_OD = objConsulta.getLENS_OD();
+        this.LENS_OI = objConsulta.getLENS_OI();
+        this.BIOM_OD = objConsulta.getBIOM_OD();
+        this.BIOM_OI = objConsulta.getBIOM_OI();
+        this.REF_OD = objConsulta.getREF_OD();
+        this.REF_OI = objConsulta.getREF_OI();
+        this.QUER_OD = objConsulta.getQUER_OD();
+        this.QUER_OI = objConsulta.getQUER_OI();
+        this.PIO_OD = objConsulta.getPIO_OD();
+        this.PIO_OI = objConsulta.getPIO_OI();
+        this.TESTC_OD = objConsulta.getTESTC_OD();
+        this.TESTC_OI = objConsulta.getTESTC_OI();
+        this.OFTA_OD = objConsulta.getOFTA_OD();
+        this.OFTA_OI = objConsulta.getOFTA_OI();
+        this.KAPPA_OD = objConsulta.getKAPPA_OD();
+        this.KAPPA_OI = objConsulta.getKAPPA_OI();
+    
+        this.fecha = objConsulta.getFecha();
+        this.hirschberg = objConsulta.getHirschberg();
+        this.ducciones = objConsulta.getDucciones();
+        this.versiones = objConsulta.getVersiones();
+        this.disposicion = objConsulta.getDisposicion();
+        this.remision = objConsulta.getRemision();
+        this.codigo = objConsulta.getCodigo();
+        this.diagnostico = objConsulta.getDiagnostico();
+        this.control = objConsulta.getControl();
+        this.tipoLente = objConsulta.getTipoLente();
+        this.distanciaPupilar = objConsulta.getDistanciaPupilar();
+        this.tratamiento = objConsulta.getTratamiento();
+        this.observaciones = objConsulta.getObservaciones();
+    
+        this.idCliente = objConsulta.getObjCliente().getId();
+        this.idEmpleado = objConsulta.getObjEmpleado().getId();
+
+    }
+   
+
 }

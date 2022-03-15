@@ -3,6 +3,8 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 import java.util.*;
 import javax.persistence.*;
 
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.FacturaDTO;
+
 @Entity
 @Table(name = "Factura")
 public class Factura {
@@ -83,5 +85,19 @@ public class Factura {
 	{
 		this.detallesFactura.add(objDetalleFactura);
 	}
+
+    public void convertirDTO_a_Factura(FacturaDTO objFacturaDTO)
+    {
+        //this.id = objFacturaDTO.getId();
+        this.fecha = objFacturaDTO.getFecha();
+        this.total = objFacturaDTO.getTotal();
+        this.abono = objFacturaDTO.getAbono();
+        this.saldo = objFacturaDTO.getSaldo();
+        this.objCliente = new Cliente();
+        this.objCliente.setId(objFacturaDTO.getIdCliente());
+        this.objEmpleado = new Empleado();
+        this.objEmpleado.setId(objFacturaDTO.getIdEmpleado());
+        
+    }
 
 }

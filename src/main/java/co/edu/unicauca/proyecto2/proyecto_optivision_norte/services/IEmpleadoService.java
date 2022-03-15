@@ -11,4 +11,7 @@ public interface IEmpleadoService {
     public Empleado update(Long idEmpleado, Empleado objEmpleado);
     public boolean delete(Long idEmpleado);
     public Optional<Empleado> validarEmpleado(Long idEmpleado, String password);
+    public Optional <Empleado> findByIdentificacion(Long identificacionEmpleado);
+    public List <Empleado> findByRol(String rol);
+
 }

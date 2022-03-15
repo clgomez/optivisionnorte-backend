@@ -52,7 +52,7 @@
         "edad": 30,
 		"sexo": "masculino",
         "fechaNacimiento": "12/04/1992",
-		"ocupacion": "administrador"
+		"ocupacion": "comerciante"
     },
     {
         "id": 5,
@@ -71,13 +71,9 @@
     "id": 2,
     "fecha": "09/02/2022",
     "hora": "04:00pm",
-    "estado": false,
-    "objCliente": {
-                    "id": 3
-                  },
-    "objEmpleado": {
-                    "id": 2
-                   }              
+    "estado": true,
+    "idCliente": 1
+             
 	}
 	
 	
@@ -181,7 +177,9 @@
      "descripcion": "gafas transition",
       "marca":"polo",
       "referencia":"p1",
-      "material": "plastico"
+      "material": "plastico",
+      "precio": 10000
+	
    }
 
 

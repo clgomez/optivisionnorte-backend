@@ -59,5 +59,17 @@ public class EmpleadoServiceImpl implements IEmpleadoService{
         return this.empleadoRepository.findByIdentificacionAndPassword(idEmpleado, password);
         
     }
+
+    @Override
+    public Optional <Empleado> findByIdentificacion(Long identificacionEmpleado) {
+        return this.empleadoRepository.findByIdentificacion(identificacionEmpleado);
+    }
+
+    @Override
+    public List<Empleado> findByRol(String rol) {
+        return this.empleadoRepository.findByRol(rol);
+    }
+
+    
     
 }

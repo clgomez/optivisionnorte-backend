@@ -3,6 +3,8 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities;
 import java.util.*;
 import javax.persistence.*;
 
+import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ProductoDTO;
+
 @Entity
 @Table(name = "Producto")
 public class Producto {    
@@ -89,5 +91,17 @@ public class Producto {
 	{
 		this.detallesPedido.add(objDetallePedido);
 	}
+
+    public void convertirDTO_a_Producto (ProductoDTO objProductoDTO)
+    {
+        //this.id = objProductoDTO.getId();
+        this.nombre = objProductoDTO.getNombre();
+        this.descripcion = objProductoDTO.getDescripcion();
+        this.marca = objProductoDTO.getMarca();
+        this.referencia = objProductoDTO.getReferencia();
+        this.material = objProductoDTO.getMaterial();
+        this.precio = objProductoDTO.getPrecio();
+    }
+
 
 }

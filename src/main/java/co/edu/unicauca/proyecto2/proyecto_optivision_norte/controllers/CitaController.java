@@ -117,9 +117,17 @@ public class CitaController {
         Map<String, Object> respuesta = new HashMap<>();
         
         try {
-            citaService.delete(idCita);
-            respuesta.put("Exito","Se elimino correctamente");
-            return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.INTERNAL_SERVER_ERROR);
+            if(citaService.delete(idCita))
+            {    respuesta.put("Exito","Se elimino correctamente");
+                return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.OK);
+            
+            }   
+            else   
+            {    respuesta.put("Mensaje","La cita no existe");  
+                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
+
+            }
+            
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al realizar la eliminacion en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());
