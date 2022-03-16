@@ -1,4 +1,4 @@
-[
+[    
     {
         "id": 1,
         "tipoIdentificacion": "cedula de ciudadanía",
@@ -35,10 +35,10 @@
         "direccion": "bello horizonte",
         "telefono": "321578269",
         "email": "kjimenezp@gmail.com",
-		"edad": 25,
+	"edad": 25,
         "sexo": "femenino",
         "fechaNacimiento": "10/03/2001",
-		"ocupacion": "vendedora"
+	"ocupacion": "vendedora"
     },
     {
         "id": 4,
@@ -50,140 +50,92 @@
         "telefono": "319457821",
         "email": "cafernandez@gmail.com",
         "edad": 30,
-		"sexo": "masculino",
+	"sexo": "masculino",
         "fechaNacimiento": "12/04/1992",
-		"ocupacion": "comerciante"
+	"ocupacion": "comerciante"
     },
+
     {
-        "id": 5,
-        "tipoIdentificacion": "cedula de ciudadanía",
-        "identificacion": 1061784513,
-        "nombres": "juan carlos",
-        "apellidos": "satizabal valverde",
-        "direccion": "guaduales de la hacienda",
-        "telefono": "321203876",
-        "email": "jcsatizabal@gmail.com",
-        "sexo": "masculino",
-        "fechaNacimiento": "03/07/1987"
-    }
+	"id": 2,
+	"fecha": "09/02/2022",
+	"hora": "04:00pm",
+	"estado": true,
+	"idCliente": 1
+		     
+   },
+
+   {
+      	"id": 1,
+    	"motivo": "1",
+    	"antecedentes": "1",
+    	"avlsc_OD": 1,
+    	"avlsc_OI": 1,
+    	"avlpc_OD": 1,
+    	"avpsc_OI": 1,
+    	"ph_OD": 1,
+    	"ph_OI": 1,
+    	"lens_OD": 1,
+    	"lens_OI": 1,
+    	"biom_OD": 1,
+    	"biom_OI": 1,
+    	"ref_OD":  1,
+    	"ref_OI":  1,
+    	"quer_OD": 1,
+    	"quer_OI": 1,
+    	"pio_OD":  1,
+    	"pio_OI":  1,
+    	"testc_OD":1,
+    	"testc_OI":1,
+    	"ofta_OD":  1,
+    	"ofta_OI": 1,
+    	"kappa_OD":1,
+    	"kappa_OI":1,
+    	"fecha": "1",
+    	"hirschberg": "1",
+    	"ducciones": "1",
+    	"versiones": "1",
+    	"disposicion": "1",
+    	"remision": "1",
+    	"codigo": 1,
+    	"diagnostico": "1",
+    	"control": "1",
+    	"tipoLente": "1",
+    	"distanciaPupilar": "1",
+    	"tratamiento": "1",
+    	"observaciones": "1",
+    	"idCliente": 2,
+    	"idEmpleado": 1
+	},
+
 	
-	{
-    "id": 2,
-    "fecha": "09/02/2022",
-    "hora": "04:00pm",
-    "estado": true,
-    "idCliente": 1
-             
-	}
-	
-	
-	{
-	  "id": 1,
-      "motivo": 1,
-      "antecedentes": "ninguno",
-	  "examenes":
-			[ {
-				"nombre_examen":"AGUDEZA VISUAL",
-				"AVLSC": {"OD":"1", "OI":"1"},
-				"AVPSC": {"OD":"1", "OI":"1"},
-				"PH": {"OD":"1", "OI":"1"}
-			  },
-			  {
-				"nombre_examen":"LENSOMETRIA",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"BIOMICROSCOPIA",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"REFLEJOS",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"QUERATOMETRIA",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"PIO",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"TEST DE COLOR",
-				"TEST": "1",  	
-				"COLOR": "1"
-			  },
-			  {
-				"nombre_examen":"OFTALMOSCOPIA",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"KAPPA",
-				"OD": "1",  	
-				"OI": "1"
-			  },
-			  {
-				"nombre_examen":"RETINOSCOPIA ESTATICA",
-				"ESF": {"OD":"1", "OI":"1"}, 
-				"CIL": {"OD":"1", "OI":"1"}, 
-				"EJE": {"OD":"1", "OI":"1"}, 
-				"AVL": {"OD":"1", "OI":"1"}, 
-				"ADO": {"OD":"1", "OI":"1"}, 
-				"AVC": {"OD":"1", "OI":"1"}
-				
-			  },
-			  {
-				"nombre_examen":"RX FINAL",
-				"ESF": {"OD":"1", "OI":"1"}, 
-				"CIL": {"OD":"1", "OI":"1"}, 
-				"EJE": {"OD":"1", "OI":"1"}, 
-				"AVL": {"OD":"1", "OI":"1"}, 
-				"ADO": {"OD":"1", "OI":"1"}, 
-				"AVC": {"OD":"1", "OI":"1"}
-			  }
-			  
-			],
-      "fecha": "15/02/2022",
-	  "hirschberg": 1,
-	  "ducciones": 1,
-	  "versiones": 1,
-	  "disposicion": 1,
-	  "remision": 1,
-	  "codigo": 1,
-	  "diagnostico": 1,
-	  "control": 1,
-	  "tipoLente": 1,
-	  "distanciaPupilar": 1,
-	 "tratamiento": 1,
-	  "observaciones": 1,
-	  "objCliente": {
-                     "id": 5
-                    },
-	  "objEmpleado": {
-                     "id": 3
-                    }
-		
-	}
-    
     {
-     "id": 1,
-     "nombre": "gafas deportivas",
-     "descripcion": "gafas transition",
-      "marca":"polo",
-      "referencia":"p1",
-      "material": "plastico",
-      "precio": 10000
+     	"id": 1,
+     	"nombre": "gafas deportivas",
+     	"descripcion": "gafas transition",
+      	"marca":"polo",
+      	"referencia":"p1",
+      	"material": "plastico",
+      	"precio": 10000
 	
-   }
+   },
+   
+   {
+	"id": 1,
+	"fecha": "1",
+	"total": 1,
+	"abono": 1,
+	"saldo": 1,
+	"idCliente": 1,
+	"idEmpleado": 1
+  },
 
-
-
-
+  {
+ 	"id": 1,
+ 	"cantidad": 1,
+	 "precioUnitario": 1,
+	 "subtotal": 1,
+	 "idFactura":1,
+	 "idProducto": 1
+  }
 	
 ]

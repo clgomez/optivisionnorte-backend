@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.DetalleFacturaDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.DetalleFactura;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IDetalleFacturaService;
@@ -47,11 +46,11 @@ public class DetalleFacturaController {
 	@GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idDetalleFactura){
         Map<String, Object> respuesta = new HashMap<>();
+        DetalleFactura detalleFactura = new DetalleFactura();
         DetalleFacturaDTO detalleFacturaDTO = new DetalleFacturaDTO(); 
 
         try {
             Optional<DetalleFactura> optDetalleFactura = this.detalleFacturaService.findById(idDetalleFactura);
-            DetalleFactura detalleFactura = new DetalleFactura();
       
             if (optDetalleFactura.isPresent()) {
                 
@@ -60,7 +59,7 @@ public class DetalleFacturaController {
 
                return new ResponseEntity<DetalleFacturaDTO>(detalleFacturaDTO, HttpStatus.OK);
             } else {
-                respuesta.put("mensaje", "No se encontró el detalle factura");
+                respuesta.put("mensaje", "No se encontró el detalle de factura");
                 return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.NOT_FOUND);
             }
         } catch (DataAccessException e){
@@ -102,8 +101,7 @@ public class DetalleFacturaController {
         try {
             detalleFactura = this.detalleFacturaService.update(idDetalleFactura, objDetalleFactura);
             detalleFacturaDTO.convertirDetalleFactura_a_DTO(detalleFactura);
-            
-                
+               
         } catch (DataAccessException e){
             respuesta.put("mensaje", "Error al actualizar en la base de datos");
             respuesta.put("Error", e.getMessage() + " " + e.getMostSpecificCause().getMessage());

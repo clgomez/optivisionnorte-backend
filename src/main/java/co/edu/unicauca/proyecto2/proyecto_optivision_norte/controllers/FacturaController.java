@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.FacturaDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Factura;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IFacturaService;
@@ -48,10 +47,10 @@ public class FacturaController {
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idFactura){
         Map<String, Object> respuesta = new HashMap<>();
         FacturaDTO facturaDTO = new FacturaDTO(); 
+        Factura factura = new Factura();
 
         try {
             Optional<Factura> optFactura = this.facturaService.findById(idFactura);
-            Factura factura = new Factura();
 
             if (optFactura.isPresent()) {
                 

@@ -2,13 +2,11 @@ package co.edu.unicauca.proyecto2.proyecto_optivision_norte.controllers;
 
 import java.util.*;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ProductoDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Producto;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IProductoService;
@@ -54,7 +52,6 @@ public class ProductoController {
             if (optProducto.isPresent()) {
                 producto = optProducto.get();
                 productoDTO.convertirProducto_a_DTO(producto);
-          
                                        
                 return new ResponseEntity<ProductoDTO>(productoDTO, HttpStatus.OK);
             } else {

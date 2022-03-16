@@ -7,7 +7,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.CitaDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Cita;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.ICitaService;

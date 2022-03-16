@@ -8,7 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ConsultaDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Consulta;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IConsultaService;
@@ -47,12 +46,12 @@ public class ConsultaController {
 	@GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable("id") Long idConsulta){
         Map<String, Object> respuesta = new HashMap<>();
-
-        ConsultaDTO consultaDTO = new ConsultaDTO();    
-         
+        Consulta consulta = new Consulta();
+        ConsultaDTO consultaDTO = new ConsultaDTO();  
+       
         try {
             Optional<Consulta> optConsulta = this.consultaService.findById(idConsulta);
-            Consulta consulta = new Consulta();
+           
             if (optConsulta.isPresent()) {
                 consulta = optConsulta.get();
                 consultaDTO.convertirConsulta_a_DTO(consulta);

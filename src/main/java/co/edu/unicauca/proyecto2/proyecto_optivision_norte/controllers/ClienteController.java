@@ -7,7 +7,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.dtos.ClienteDTO;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.entities.Cliente;
 import co.edu.unicauca.proyecto2.proyecto_optivision_norte.services.IClienteService;
@@ -131,6 +130,7 @@ public class ClienteController {
         Map<String, Object> respuesta = new HashMap<>();
             Cliente cliente = new Cliente();
             ClienteDTO clienteDTO = new ClienteDTO();
+            cliente.setId(-1);
         try {
             Optional<Cliente> optCliente = this.clienteService.findByIdentificacion(identificacionCliente);
             if (optCliente.isPresent()) {
